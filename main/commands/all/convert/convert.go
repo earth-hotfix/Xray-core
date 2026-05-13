@@ -13,5 +13,6 @@ var CmdConvert = &base.Command{
 	Commands: []*base.Command{
 		cmdProtobuf,
 		cmdJson,
+		cmdSubscription,
 	},
 }
