@@ -277,7 +277,7 @@ func convertVlessNode(u *url.URL, index int) (map[string]any, error) {
 			"spiderX":     valueOrDefault(q.Get("spx"), "/"),
 		}
 		if realitySettings["serverName"] == "" || realitySettings["publicKey"] == "" {
-			return nil, fmt.Errorf("vless reality node missing required sni/pbk")
+			return nil, fmt.Errorf("vless reality node missing required serverName(sni)/publicKey(pbk)")
 		}
 		stream["realitySettings"] = realitySettings
 	default:
@@ -469,7 +469,8 @@ func dedupeTag(tag string, seen map[string]int) string {
 }
 
 func normalizeNetwork(value string) string {
-	switch strings.ToLower(strings.TrimSpace(value)) {
+	normalized := strings.ToLower(strings.TrimSpace(value))
+	switch normalized {
 	case "", "tcp", "raw":
 		return "tcp"
 	case "ws", "websocket":
@@ -479,7 +480,7 @@ func normalizeNetwork(value string) string {
 	case "splithttp", "xhttp":
 		return "splithttp"
 	default:
-		return strings.ToLower(strings.TrimSpace(value))
+		return normalized
 	}
 }
 
